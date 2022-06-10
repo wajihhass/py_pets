@@ -8,7 +8,6 @@ def create_app():
     #database config
     from . import _config
     app.config['SQLALCHEMY_DATABASE_URI'] = _config.connect_str
-    #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1410@localhost:5432/petfax'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False       
 
     from . import models
