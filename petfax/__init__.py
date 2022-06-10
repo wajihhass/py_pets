@@ -1,9 +1,19 @@
 # config                    
 from flask import Flask
+from flask_migrate import Migrate
 
 # factory
 def create_app():
     app = Flask(__name__)
+    #database config
+    from . import _config
+    app.config['SQLALCHEMY_DATABASE_URI'] = _config.connect_str
+    #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1410@localhost:5432/petfax'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False       
+
+    from . import models
+    models.db.init_app(app)
+    migrate = Migrate(app, models.db)
 
     # index route
     @app.route('/')
@@ -20,3 +30,8 @@ def create_app():
 
     # return the app 
     return app
+
+
+    
+
+
